@@ -1,8 +1,8 @@
 {
   "manifest_version" : 2,
-  "name" : "sample extention",
-  "description" : "just for testing",
-  "version" : "1.1.0",
+  "name" : "YouTube-Keys-chrome-extension",
+  "description" : "change keyboard shourtcut for youtube ( Increases movie playback speed ---> Up arrow ) (Reduces movie playback speed ---> Down arrow) (Repeats the sentence ---> Home ) (Display image captions ---> End)",
+  "version" : "1.0.0",
   "author" : "Omid Ahmadi",
   "content_scripts":
    [
