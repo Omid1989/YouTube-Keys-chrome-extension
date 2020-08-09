@@ -1,0 +1,20 @@
+{
+  "manifest_version" : 2,
+  "name" : "sample extention",
+  "description" : "just for testing",
+  "version" : "1.1.0",
+  "author" : "Omid Ahmadi",
+  "content_scripts":
+   [
+    {
+      "matches":
+      [
+        "http://*.youtube.com/*",
+        "https://*.youtube.com/*"
+      ],
+      "run_at": "document_end",
+      "js": ["content.js"]
+     }
+   ]
+
+}
