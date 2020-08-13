@@ -1,5 +1,6 @@
 console.log('injection  content script ');
 var datavtt=null;
+var lang='en';
 function getYouTubeVideoId() {
 
     var video_id = window.location.search.split('v=')[1];
@@ -27,12 +28,33 @@ function parse_timestamp(s) {
 
     return seconds + 60 * minutes + 60 * 60 * hours;
 }
+
+function getTranscriptList(){
+	
+	var request = new XMLHttpRequest()
+	request.open('GET', 'https://www.youtube.com/api/timedtext?type=list&v='+getYouTubeVideoId(), true)
+    request.onload = function (){
+		
+		if (request.readyState === request.DONE && request.status === 200) {
+             console.log('this is track ',this.responseXML.getElementsByTagName('track')[0].getAttribute("lang_code"));
+		     lang=this.responseXML.getElementsByTagName('track')[0].getAttribute("lang_code");
+             // console.log(this.responseText);
+                }
+  
+        
+       
+    }
+    request.send()
+	
+}
 function getYouTubeVideovtt(){
+	getTranscriptList();
+	console.log(lang);
     var request = new XMLHttpRequest()
-    request.open('GET', 'https://www.youtube.com/api/timedtext?lang=en&v='+getYouTubeVideoId()+'&fmt=vtt', true)
+    request.open('GET', 'https://www.youtube.com/api/timedtext?lang='+lang+'&v='+getYouTubeVideoId()+'&fmt=vtt', true)
     request.onload = function (){
         // console.log(this.responseXML);
-        // console.log(this.responseText);
+        console.log(this.responseText);
         data=this.responseText;
         datavtt=data.split("\n\n").map(function (item,index) {
 
@@ -62,11 +84,11 @@ function doKeyPress(e){
     {
       case "ArrowUp":
           e.preventDefault();
-          video.playbackRate++;
+          video.playbackRate+=0.25;
           break;
       case "ArrowDown":
           e.preventDefault();
-          video.playbackRate--;
+          video.playbackRate-=0.25;
           break;
       case "ArrowRight":
           e.preventDefault();
